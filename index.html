@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light" data-lang="fr">
+<html lang="fr" data-theme="dark" data-lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pierre-Arthur Cavelier de Cuverville — Account Executive · Media Strategy · Paris</title>
 <meta name="description" content="CV interactif de Pierre-Arthur Cavelier de Cuverville — Account Executive chez Omnicom Remind-PHD. Stratégie média, AdTech (DV360, GA4), 20+ clients pilotés, Paris.">
 <meta name="author" content="Pierre-Arthur Cavelier de Cuverville">
-<meta name="theme-color" content="#1A1A2E">
+<meta name="theme-color" content="#0a0e27">
 <!-- Open Graph -->
 <meta property="og:title" content="Pierre-Arthur Cavelier — Account Executive · Media Strategy">
 <meta property="og:description" content="CV interactif · Account Executive chez Omnicom Remind-PHD · Paris. Stratégie média pluricanal, AdTech, 20+ marques pilotées.">
@@ -30,11 +30,11 @@
   --border:rgba(26,26,46,0.11);--bh:rgba(200,96,42,0.35);
   --shc:0 8px 32px rgba(200,96,42,0.14);
   --sh:0 8px 32px rgba(26,26,46,0.12);
-  --tr:0.3s cubic-bezier(0.4,0,0.2,1);
+  --tr:0.3s cubic-bezier(0.22,1,0.36,1);
   --nav-h:58px;
 }
 [data-theme="dark"]{
-  --bg:#0D0D1A;--bg-card:#1E1E32;
+  --bg:#0a0e27;--bg-card:#151a3a;
   --bg-card-dark:rgba(255,255,255,0.055);
   --bg-card-dark-hover:rgba(255,255,255,0.085);
   --text:#EDE8DF;--text2:#A0A0C4;--muted:#5C5C80;
@@ -43,6 +43,13 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+/* ── Aurora signature (écosystème Pulse) — déclinée cuivre, dark uniquement ── */
+[data-theme="dark"] body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at 12% -8%,rgba(200,96,42,0.07),transparent 60%),
+    radial-gradient(1000px 700px at 95% 12%,rgba(217,120,74,0.05),transparent 60%);
+}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.75;transition:background var(--tr),color var(--tr);}
 
 /* ══ SECTION STRIPE — subtle alternating depth ══ */
@@ -252,7 +259,7 @@ body.focus-mode .focus-badge{display:block;}
   display:flex;align-items:center;justify-content:space-between;padding:0 2rem;
   transition:background var(--tr),box-shadow var(--tr);
 }
-[data-theme="dark"] .nav{background:rgba(13,13,26,0.92);box-shadow:0 1px 0 rgba(240,230,211,0.04);}
+[data-theme="dark"] .nav{background:rgba(10,14,39,0.92);box-shadow:0 1px 0 rgba(240,230,211,0.04);}
 .nav-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:var(--text);text-decoration:none;}
 .nav-brand em{color:var(--copper);font-style:normal;}
 .nav-links{display:flex;gap:1.5rem;list-style:none;}
@@ -540,7 +547,7 @@ section{padding:4.5rem 0;}
   .radar-chart-area{position:static;}
 }
 #projects{background:var(--bg);}
-.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1rem;}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1rem;align-items:start;}
 .pc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;
   box-shadow:0 1px 4px rgba(26,26,46,0.06),0 4px 16px rgba(26,26,46,0.05);
   transition:border-color 0.4s cubic-bezier(0.16,1,0.3,1),transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.4s cubic-bezier(0.16,1,0.3,1);}
@@ -551,9 +558,14 @@ section{padding:4.5rem 0;}
 .pn{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:0.28rem;}
 .pcl{font-size:0.74rem;color:var(--copper);font-weight:500;margin-bottom:0.5rem;}
 .ps{font-size:0.82rem;color:var(--text2);line-height:1.58;}
-.px{max-height:0;overflow:hidden;transition:max-height 0.4s ease;}
-.pc.open .px{max-height:340px;}
-.pd{padding:1rem 1.3rem 1.3rem;border-top:1px solid var(--border);}
+.px{display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.45s cubic-bezier(0.22,1,0.36,1);}
+.pc.open .px{grid-template-rows:1fr;}
+.pd{
+  min-height:0;overflow:hidden;
+  padding:0 1.3rem;border-top:1px solid transparent;
+  transition:padding 0.45s cubic-bezier(0.22,1,0.36,1),border-color 0.3s ease;
+}
+.pc.open .pd{padding:1rem 1.3rem 1.3rem;border-top-color:var(--border);}
 .pd p{font-size:0.82rem;color:var(--text2);line-height:1.58;margin-bottom:0.9rem;}
 .kpis{display:flex;gap:0.65rem;flex-wrap:wrap;}
 .kpi{
@@ -892,7 +904,7 @@ footer{background:var(--night);padding:4rem 0 2.5rem;}
   transform:translateY(-8px);opacity:0;
   transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),opacity 0.25s ease;
 }
-[data-theme="dark"] .mobile-menu{background:rgba(13,13,26,0.97);}
+[data-theme="dark"] .mobile-menu{background:rgba(10,14,39,0.97);}
 .mobile-menu.open{display:block;transform:translateY(0);opacity:1;}
 .mobile-menu ul{list-style:none;padding:0;margin:0;}
 .mobile-menu ul li a{
@@ -2067,13 +2079,13 @@ body.cs-lock{overflow:hidden;}
     </p>
     <div class="cs-grid">
 
-      <article class="cs-card fade" data-cs="vw" tabindex="0" role="button" aria-haspopup="dialog">
+      <article class="cs-card fade" data-cs="auto" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="cs-shot">
           <div class="cs-shot-bar"><i></i><i></i><i></i></div>
           <div class="cs-shot-body"><div class="cs-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
         </div>
         <div class="cs-body">
-          <div class="cs-cl">Volkswagen Group · Remind-PHD</div>
+          <div class="cs-cl">Groupe automobile européen · Remind-PHD</div>
           <h3 class="cs-tt"><span class="fr">Intelligence concurrentielle C-level</span><span class="en">C-level competitive intelligence</span></h3>
           <p class="cs-ds">
             <span class="fr">Transformer la donnée Kantar / Mxplorer en analyses stratégiques bilingues pour 5 marques du groupe.</span>
@@ -2083,7 +2095,7 @@ body.cs-lock{overflow:hidden;}
         </div>
       </article>
 
-      <article class="cs-card fade" data-cs="doctolib" tabindex="0" role="button" aria-haspopup="dialog">
+      <article class="cs-card fade" data-cs="esante" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="cs-shot">
           <div class="cs-shot-bar"><i></i><i></i><i></i></div>
           <div class="cs-shot-body">
@@ -2094,7 +2106,7 @@ body.cs-lock{overflow:hidden;}
           </div>
         </div>
         <div class="cs-body">
-          <div class="cs-cl">Doctolib · Remind-PHD</div>
+          <div class="cs-cl">Plateforme e-santé leader · Remind-PHD</div>
           <h3 class="cs-tt"><span class="fr">Dashboard Brand Lift multi-vagues</span><span class="en">Multi-wave Brand Lift dashboard</span></h3>
           <p class="cs-ds">
             <span class="fr">Un outil de reporting sur mesure, multi-campagnes et multi-vagues, construit de zéro en HTML/JS.</span>
@@ -2104,7 +2116,7 @@ body.cs-lock{overflow:hidden;}
         </div>
       </article>
 
-      <article class="cs-card fade" data-cs="cupra" tabindex="0" role="button" aria-haspopup="dialog">
+      <article class="cs-card fade" data-cs="launch" tabindex="0" role="button" aria-haspopup="dialog">
         <div class="cs-shot">
           <div class="cs-shot-bar"><i></i><i></i><i></i></div>
           <div class="cs-shot-body">
@@ -2112,11 +2124,11 @@ body.cs-lock{overflow:hidden;}
           </div>
         </div>
         <div class="cs-body">
-          <div class="cs-cl">CUPRA Raval · Remind-PHD</div>
+          <div class="cs-cl">Constructeur automobile · Remind-PHD</div>
           <h3 class="cs-tt"><span class="fr">Stratégie de lancement</span><span class="en">Launch strategy</span></h3>
           <p class="cs-ds">
-            <span class="fr">Recommandation média complète pour le lancement du Raval : ciblage TGI, BVOD, social et digital.</span>
-            <span class="en">Full media recommendation for the Raval launch: TGI targeting, BVOD, social and digital.</span>
+            <span class="fr">Recommandation média complète pour le lancement d’un nouveau modèle urbain : ciblage TGI, BVOD, social et digital.</span>
+            <span class="en">Full media recommendation for a new urban model launch: TGI targeting, BVOD, social and digital.</span>
           </p>
           <div class="cs-cta"><span class="fr">Ouvrir le dossier</span><span class="en">Open case</span></div>
         </div>
@@ -2137,9 +2149,10 @@ body.cs-lock{overflow:hidden;}
 
       <div class="pc fade" onclick="toggleProj(this)">
         <div class="ph"><div class="pi">🚗</div>
-          <div class="pn fr">SEAT, CUPRA &amp; Volkswagen — Stratégie plurimédias</div>
-          <div class="pn en">SEAT, CUPRA &amp; Volkswagen — Cross-media strategy</div>
-          <div class="pcl">SEAT / CUPRA / VW / VW Pro · Remind-PHD</div>
+          <div class="pn fr">Automobile — Stratégie plurimédias multi-marques</div>
+          <div class="pn en">Automotive — Multi-brand cross-media strategy</div>
+          <div class="pcl fr">4 marques d’un groupe automobile européen · Remind-PHD</div>
+          <div class="pcl en">4 brands of a European automotive group · Remind-PHD</div>
           <p class="ps fr">Pilotage simultané de 4 marques automobile aux positionnements distincts, de la planification stratégique à l'optimisation temps réel.</p>
           <p class="ps en">Simultaneous management of 4 automotive brands with distinct positioning, from strategic planning to real-time optimisation.</p>
         </div>
@@ -2152,9 +2165,10 @@ body.cs-lock{overflow:hidden;}
 
       <div class="pc fade" onclick="toggleProj(this)">
         <div class="ph"><div class="pi">✈️</div>
-          <div class="pn fr">Travel Premium — Delta, La Compagnie, Dreamjet</div>
-          <div class="pn en">Premium Travel — Delta, La Compagnie, Dreamjet</div>
-          <div class="pcl">Delta Air Lines / La Compagnie / Dreamjet · Remind-PHD</div>
+          <div class="pn fr">Travel Premium — Compagnies aériennes</div>
+          <div class="pn en">Premium Travel — Airlines</div>
+          <div class="pcl fr">3 compagnies aériennes (long-courrier &amp; affaires) · Remind-PHD</div>
+          <div class="pcl en">3 airlines (long-haul &amp; business) · Remind-PHD</div>
           <p class="ps fr">Gestion de 3 compagnies aériennes avec stratégies d'acquisition digitale distinctes et focus ROI fort.</p>
           <p class="ps en">Managing 3 airlines with distinct digital acquisition strategies and a strong ROI focus.</p>
         </div>
@@ -2167,9 +2181,10 @@ body.cs-lock{overflow:hidden;}
 
       <div class="pc fade" onclick="toggleProj(this)">
         <div class="ph"><div class="pi">🏖️</div>
-          <div class="pn fr">Pierre &amp; Vacances Group — Media strategy</div>
-          <div class="pn en">Pierre &amp; Vacances Group — Media strategy</div>
-          <div class="pcl">Pierre &amp; Vacances / Center Parcs / Village Nature · Remind-PHD</div>
+          <div class="pn fr">Tourisme &amp; Hospitality — Media strategy</div>
+          <div class="pn en">Tourism &amp; Hospitality — Media strategy</div>
+          <div class="pcl fr">Groupe leader du tourisme — 3 marques · Remind-PHD</div>
+          <div class="pcl en">Leading tourism group — 3 brands · Remind-PHD</div>
           <p class="ps fr">Coordination des 3 marques du groupe sur les leviers digitaux avec saisonnalité forte et objectifs de réservation.</p>
           <p class="ps en">Coordinating 3 group brands on digital channels with strong seasonality and booking objectives.</p>
         </div>
@@ -2182,9 +2197,10 @@ body.cs-lock{overflow:hidden;}
 
       <div class="pc fade" onclick="toggleProj(this)">
         <div class="ph"><div class="pi">🍸</div>
-          <div class="pn fr">Diageo &amp; Moët Hennessy — Spirits premium</div>
-          <div class="pn en">Diageo &amp; Moët Hennessy — Premium spirits</div>
-          <div class="pcl">Diageo / Moët Hennessy · Remind-PHD</div>
+          <div class="pn fr">Spiritueux premium — Groupes internationaux</div>
+          <div class="pn en">Premium spirits — Global groups</div>
+          <div class="pcl fr">2 groupes internationaux de spiritueux · Remind-PHD</div>
+          <div class="pcl en">2 global spirits groups · Remind-PHD</div>
           <p class="ps fr">Pilotage de campagnes pour des marques de spiritueux premium avec exigences brand safety et ciblage socio-démo précis.</p>
           <p class="ps en">Campaign management for premium spirits brands with brand safety requirements and precise demographic targeting.</p>
         </div>
@@ -2213,9 +2229,10 @@ body.cs-lock{overflow:hidden;}
 
       <div class="pc fade" onclick="toggleProj(this)">
         <div class="ph"><div class="pi">🏥</div>
-          <div class="pn fr">Santé &amp; Bien-être — Doctolib, Weight Watchers</div>
-          <div class="pn en">Health &amp; Wellness — Doctolib, Weight Watchers</div>
-          <div class="pcl">Doctolib / Weight Watchers · Remind-PHD</div>
+          <div class="pn fr">Santé &amp; Bien-être — E-santé et wellness</div>
+          <div class="pn en">Health &amp; Wellness — E-health and wellness</div>
+          <div class="pcl fr">Plateforme e-santé &amp; acteur du wellness · Remind-PHD</div>
+          <div class="pcl en">E-health platform &amp; wellness player · Remind-PHD</div>
           <p class="ps fr">Campagnes B2B et B2C simultanées avec KPIs distincts, haute sensibilité de la brand safety et reporting granulaire.</p>
           <p class="ps en">Simultaneous B2B and B2C campaigns with distinct KPIs, high brand safety sensitivity and granular reporting.</p>
         </div>
@@ -2834,8 +2851,8 @@ function toggleExp(card){
 // ─── PROJECT TOGGLE ────────────────────────────────────────────
 function toggleProj(card){
   var was=card.classList.contains('open');
-  document.querySelectorAll('.pc').forEach(function(c){c.classList.remove('open');});
-  if(!was) card.classList.add('open');
+  document.querySelectorAll('.pc').forEach(function(c){c.classList.remove('open');c.setAttribute('aria-expanded','false');});
+  if(!was){card.classList.add('open');card.setAttribute('aria-expanded','true');}
 }
 
 // ─── SKILL FILTER + TAG GROUPS ─────────────────────────────────
@@ -2883,12 +2900,17 @@ document.getElementById('themeBtn').addEventListener('click',function(){
   var html=document.documentElement;
   var dark=html.dataset.theme==='dark';
   html.dataset.theme=dark?'light':'dark';
+  try{localStorage.setItem('cv-theme',html.dataset.theme);}catch(e){/* noop */}
   var thumb=document.getElementById('themeSwitchThumb');
   if(thumb) thumb.textContent=dark?'☀️':'🌙';
   setTimeout(function(){buildRadar(currentFilter);},60);
 });
-// init thumb emoji on load
+// init : restaure la préférence sauvegardée + emoji du switch
 (function(){
+  try{
+    var saved=localStorage.getItem('cv-theme');
+    if(saved==='light'||saved==='dark') document.documentElement.dataset.theme=saved;
+  }catch(e){/* noop */}
   var thumb=document.getElementById('themeSwitchThumb');
   if(thumb) thumb.textContent=document.documentElement.dataset.theme==='dark'?'🌙':'☀️';
 })();
@@ -3041,7 +3063,7 @@ function buildRadar(filter){
   // so the radar always uses the dark palette
   var textColor='rgba(240,230,211,0.72)';
   var gridColor='rgba(240,230,211,0.14)';
-  var markerFill='#1A1A2E';
+  var markerFill=document.documentElement.dataset.theme==='dark'?'#151a3a':'#1A1A2E';
   var fillA=0.28;
   var fillB=0.08;
   var polyFill1='rgba(240,230,211,0.018)';
@@ -3522,17 +3544,17 @@ if(trajWrap){
 
 /* ─── 2. CASE STUDIES — modal ─────────────────────────────────── */
 var CS={
-  vw:{
-    cl:'Volkswagen Group · Remind-PHD',
+  auto:{
+    cl:'Groupe automobile européen · Remind-PHD',
     tt:{fr:'Intelligence concurrentielle C-level',en:'C-level competitive intelligence'},
     kpis:[
       {v:5,sfx:'',fr:'Marques couvertes',en:'Brands covered'},
       {v:61,sfx:'',fr:'Termes de glossaire',en:'Glossary terms'},
       {v:2,sfx:'',fr:'Langues (FR/EN)',en:'Languages (FR/EN)'},
-      {v:34,sfx:'%',pfx:'+',fr:'ROI campagne (VW)',en:'Campaign ROI (VW)'}
+      {v:34,sfx:'%',pfx:'+',fr:'ROI campagne',en:'Campaign ROI'}
     ],
-    ctx:{fr:'Le groupe Volkswagen (VW, Audi, SEAT/CUPRA, Škoda, Porsche) avait besoin d\u2019une lecture claire et actionnable de la pression média concurrente sur le marché français — destinée directement aux directions.',
-         en:'The Volkswagen Group (VW, Audi, SEAT/CUPRA, Škoda, Porsche) needed a clear, actionable read of competitive media pressure on the French market — aimed directly at leadership.'},
+    ctx:{fr:'Un grand groupe automobile européen (5 marques aux positionnements distincts) avait besoin d\u2019une lecture claire et actionnable de la pression média concurrente sur le marché français — destinée directement aux directions.',
+         en:'A major European automotive group (5 brands with distinct positioning) needed a clear, actionable read of competitive media pressure on the French market — aimed directly at leadership.'},
     role:{fr:'Pilotage de l\u2019analyse de bout en bout : extraction et fiabilisation des données Kantar / Mxplorer, construction des analyses, rédaction des scripts de présentation bilingues et création d\u2019un glossaire de 61 termes pour rendre la donnée lisible par des non-experts.',
           en:'End-to-end ownership: extracting and validating Kantar / Mxplorer data, building the analysis, writing bilingual presentation scripts and creating a 61-term glossary to make the data readable for non-experts.'},
     steps:{
@@ -3542,8 +3564,8 @@ var CS={
          en:'Leadership meetings now rely on a shared competitive view, in French and English — with an analysis format reused quarter after quarter.'},
     stack:['Kantar','Mxplorer','Excel','PowerPoint','Storytelling FR/EN']
   },
-  doctolib:{
-    cl:'Doctolib · Remind-PHD',
+  esante:{
+    cl:'Plateforme e-santé leader · Remind-PHD',
     tt:{fr:'Dashboard Brand Lift multi-vagues',en:'Multi-wave Brand Lift dashboard'},
     kpis:[
       {v:1,sfx:'',fr:'Fichier autonome',en:'Self-contained file'},
@@ -3551,8 +3573,8 @@ var CS={
       {v:2,sfx:'',fr:'Thèmes (dark/light)',en:'Themes (dark/light)'},
       {v:0,sfx:'',fr:'Dépendance serveur',en:'Server dependency'}
     ],
-    ctx:{fr:'Les résultats de Brand Lift Survey de Doctolib arrivaient en fichiers Excel multi-campagnes et multi-vagues, longs à consolider manuellement et difficiles à présenter de manière homogène.',
-         en:'Doctolib\u2019s Brand Lift Survey results came as multi-campaign, multi-wave Excel files — slow to consolidate manually and hard to present consistently.'},
+    ctx:{fr:'Les résultats de Brand Lift Survey d\u2019une plateforme e-santé de premier plan arrivaient en fichiers Excel multi-campagnes et multi-vagues, longs à consolider manuellement et difficiles à présenter de manière homogène.',
+         en:'The Brand Lift Survey results of a leading e-health platform came as multi-campaign, multi-wave Excel files — slow to consolidate manually and hard to present consistently.'},
     role:{fr:'Conception et développement complet d\u2019un outil HTML/JS single-file : import Excel via SheetJS, parsing robuste multi-formats, visualisations Chart.js, comparaisons inter-vagues et design system dark/light aligné sur les standards 2026 (Bento grid, glassmorphism, micro-animations).',
           en:'Full design and development of a single-file HTML/JS tool: Excel import via SheetJS, robust multi-format parsing, Chart.js visualisations, wave-over-wave comparisons and a 2026-grade dark/light design system (Bento grid, glassmorphism, micro-animations).'},
     steps:{
@@ -3562,17 +3584,17 @@ var CS={
          en:'Brand Lift reporting went from manual consolidation to drag-and-drop: the team loads the file, the tool does the rest. Now an internal reference format.'},
     stack:['HTML/CSS/JS','SheetJS','Chart.js','UX 2026','Dark/Light']
   },
-  cupra:{
-    cl:'CUPRA Raval · Remind-PHD',
-    tt:{fr:'Stratégie de lancement Raval',en:'Raval launch strategy'},
+  launch:{
+    cl:'Constructeur automobile · Remind-PHD',
+    tt:{fr:'Stratégie de lancement d\u2019un nouveau modèle',en:'New model launch strategy'},
     kpis:[
       {v:2,sfx:'',fr:'Segments cibles',en:'Target segments'},
       {v:3,sfx:'',fr:'Canaux prioritaires',en:'Priority channels'},
       {v:1,sfx:'',fr:'Lancement marché',en:'Market launch'},
       {v:360,sfx:'°',fr:'Vision plurimédia',en:'Cross-media view'}
     ],
-    ctx:{fr:'Lancement du CUPRA Raval sur le marché français : une marque jeune, un modèle urbain, et deux publics aux codes très différents à toucher sans diluer le positionnement.',
-         en:'Launching the CUPRA Raval on the French market: a young brand, an urban model, and two audiences with very different codes — without diluting the positioning.'},
+    ctx:{fr:'Lancement d\u2019un nouveau modèle urbain pour une marque automobile jeune sur le marché français : deux publics aux codes très différents à toucher sans diluer le positionnement.',
+         en:'Launching a new urban model for a young automotive brand on the French market: two audiences with very different codes — without diluting the positioning.'},
     role:{fr:'Construction de la recommandation média : analyse d\u2019audience TGI pour définir les segments « OGs » et « Next Gens », arbitrage des canaux (BVOD, social, digital), et production de la présentation finale, avec génération automatisée des slides.',
           en:'Built the media recommendation: TGI audience analysis defining the \u201cOGs\u201d and \u201cNext Gens\u201d segments, channel arbitration (BVOD, social, digital), and production of the final deck with automated slide generation.'},
     steps:{
@@ -3715,7 +3737,7 @@ function buildDonut(){
         var rows=document.querySelectorAll('#secRows .sec-row');
         rows.forEach(function(r,j){r.classList.toggle('active',sel.indexOf(j)>-1);});
       }}},
-    stroke:{width:2,colors:[isDark?'#1E1E32':'#FFFFFF']},
+    stroke:{width:2,colors:[isDark?'#151a3a':'#FFFFFF']},
     dataLabels:{enabled:false},
     legend:{show:false},
     plotOptions:{pie:{donut:{size:'68%',labels:{
