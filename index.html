@@ -1180,6 +1180,460 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
   .container{padding:0 1rem;}
   .mode-btn{font-size:0.65rem;padding:0.18rem 0.5rem;}
 }
+
+/* ════════════════════════════════════════════════════════════════
+   V2 ADDITIONS — Trajectoire · Case Studies · Heatmap · Secteurs ·
+   Testimonials · Raccourcis clavier
+   ════════════════════════════════════════════════════════════════ */
+
+/* ══ TRAJECTOIRE — timeline horizontale scroll-drawn ══ */
+#trajectory{background:var(--bg);overflow:hidden;}
+.traj-wrap{position:relative;margin-top:3.2rem;}
+.traj-track{position:relative;height:2px;margin:0 22px 0 22px;}
+.traj-line{position:absolute;inset:0;background:var(--border);border-radius:2px;}
+.traj-line-fill{
+  position:absolute;left:0;top:0;bottom:0;width:0%;
+  background:linear-gradient(90deg,var(--copper-d),var(--copper),var(--copper-l));
+  border-radius:2px;
+  transition:width 1.1s cubic-bezier(0.22,1,0.36,1);
+  box-shadow:0 0 12px rgba(200,96,42,0.35);
+}
+.traj-nodes{position:relative;display:flex;justify-content:space-between;margin-top:-7px;}
+.traj-node{
+  position:relative;background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:0.55rem;
+  width:44px;padding:0;font-family:'DM Sans',sans-serif;
+  opacity:0;transform:translateY(10px);
+  transition:opacity 0.5s ease,transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.traj-wrap.in .traj-node{opacity:1;transform:translateY(0);}
+.traj-dot{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--muted);
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;z-index:2;
+}
+.traj-node:hover .traj-dot{border-color:var(--copper);transform:scale(1.25);}
+.traj-node.active .traj-dot{
+  background:var(--copper);border-color:var(--copper);
+  transform:scale(1.4);
+  box-shadow:0 0 0 6px rgba(200,96,42,0.15),0 0 16px rgba(200,96,42,0.4);
+}
+.traj-node.future .traj-dot{
+  border-style:dashed;border-color:var(--copper);
+  animation:traj-pulse 2.4s ease-in-out infinite;
+}
+@keyframes traj-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(200,96,42,0.3);}
+  50%{box-shadow:0 0 0 8px rgba(200,96,42,0);}
+}
+.traj-yr{
+  font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;
+  color:var(--muted);letter-spacing:0.04em;white-space:nowrap;
+  transition:color 0.3s ease,transform 0.3s ease;
+}
+.traj-node.active .traj-yr{color:var(--copper);transform:scale(1.12);}
+.traj-lbl{
+  font-size:0.62rem;color:var(--muted);letter-spacing:0.06em;
+  text-transform:uppercase;white-space:nowrap;opacity:0.75;
+}
+.traj-node.active .traj-lbl{color:var(--text2);opacity:1;}
+
+/* detail card */
+.traj-detail{
+  margin-top:2.6rem;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:16px;padding:1.6rem 1.8rem;
+  box-shadow:var(--sh);
+  display:grid;grid-template-columns:56px 1fr auto;gap:1.3rem;align-items:start;
+  position:relative;overflow:hidden;
+}
+.traj-detail::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--copper),var(--copper-l));
+}
+.traj-detail.sw .traj-d-anim{opacity:0;transform:translateY(10px);}
+.traj-d-anim{transition:opacity 0.3s ease,transform 0.3s ease;}
+.traj-d-ico{
+  width:56px;height:56px;border-radius:14px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(200,96,42,0.16),rgba(200,96,42,0.05));
+  border:1px solid rgba(200,96,42,0.3);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+}
+.traj-d-co{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;color:var(--text);}
+.traj-d-ro{font-size:0.84rem;color:var(--copper);font-weight:600;margin:0.1rem 0 0.45rem;}
+.traj-d-tx{font-size:0.85rem;color:var(--text2);line-height:1.65;max-width:600px;}
+.traj-d-yr{
+  font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;
+  color:rgba(200,96,42,0.2);line-height:1;white-space:nowrap;
+}
+@media(max-width:720px){
+  .traj-track,.traj-nodes{display:none;}
+  .traj-wrap{margin-top:1.8rem;}
+  .traj-mob{display:flex!important;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.4rem;}
+  .traj-detail{grid-template-columns:44px 1fr;padding:1.2rem 1.3rem;}
+  .traj-d-ico{width:44px;height:44px;font-size:1.15rem;}
+  .traj-d-yr{display:none;}
+}
+.traj-mob{display:none;}
+.traj-mob button{
+  padding:0.32rem 0.85rem;border-radius:100px;cursor:pointer;
+  border:1px solid var(--border);background:transparent;
+  font-family:'Syne',sans-serif;font-size:0.74rem;font-weight:700;color:var(--muted);
+  transition:all 0.25s ease;
+}
+.traj-mob button.active{background:var(--copper);border-color:var(--copper);color:#fff;}
+
+/* ══ CASE STUDIES — cartes + modal deep-dive ══ */
+#case-studies{
+  background:var(--night);position:relative;overflow:hidden;
+}
+#case-studies::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 45% at 12% 20%,rgba(200,96,42,0.08) 0%,transparent 70%),
+    radial-gradient(ellipse 45% 40% at 90% 85%,rgba(200,96,42,0.06) 0%,transparent 70%);
+}
+#case-studies .s-lbl{color:rgba(200,96,42,0.8);}
+#case-studies .s-ttl{color:var(--sand);}
+#case-studies .container{position:relative;z-index:1;}
+.cs-sub{font-size:0.88rem;color:rgba(240,230,211,0.45);margin:-1.4rem 0 2.2rem;max-width:560px;line-height:1.65;}
+.cs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;}
+@media(max-width:880px){.cs-grid{grid-template-columns:1fr;}}
+.cs-card{
+  background:var(--bg-card-dark);
+  border:1px solid rgba(240,230,211,0.11);
+  border-radius:18px;overflow:hidden;cursor:pointer;
+  display:flex;flex-direction:column;
+  transition:border-color 0.4s cubic-bezier(0.16,1,0.3,1),
+             transform 0.45s cubic-bezier(0.16,1,0.3,1),
+             box-shadow 0.45s cubic-bezier(0.16,1,0.3,1),
+             background 0.4s ease;
+  transform-style:preserve-3d;will-change:transform;
+}
+.cs-card:hover{
+  border-color:rgba(200,96,42,0.5);
+  background:var(--bg-card-dark-hover);
+  box-shadow:0 24px 64px rgba(0,0,0,0.45),0 0 0 1px rgba(200,96,42,0.12);
+}
+/* mini "screenshot" mockup window */
+.cs-shot{
+  position:relative;height:150px;margin:1rem 1rem 0;
+  background:linear-gradient(160deg,#21213A 0%,#16162A 100%);
+  border:1px solid rgba(240,230,211,0.1);
+  border-radius:12px 12px 0 0;overflow:hidden;
+  border-bottom:none;
+}
+.cs-shot-bar{
+  display:flex;gap:5px;padding:9px 11px;
+  border-bottom:1px solid rgba(240,230,211,0.07);
+}
+.cs-shot-bar i{width:7px;height:7px;border-radius:50%;background:rgba(240,230,211,0.16);}
+.cs-shot-bar i:first-child{background:rgba(200,96,42,0.7);}
+.cs-shot-body{position:absolute;inset:26px 0 0;padding:12px 14px;}
+/* mockup A — bars qui montent */
+.cs-bars{display:flex;align-items:flex-end;gap:8px;height:100%;padding-bottom:4px;}
+.cs-bars i{
+  flex:1;border-radius:4px 4px 0 0;
+  background:linear-gradient(180deg,var(--copper-l),var(--copper-d));
+  opacity:0.55;transform:scaleY(0.45);transform-origin:bottom;
+  transition:transform 0.6s cubic-bezier(0.34,1.3,0.64,1),opacity 0.4s ease;
+}
+.cs-card:hover .cs-bars i{transform:scaleY(1);opacity:0.95;}
+.cs-bars i:nth-child(1){height:35%;transition-delay:0s;}
+.cs-bars i:nth-child(2){height:55%;transition-delay:0.05s;}
+.cs-bars i:nth-child(3){height:45%;transition-delay:0.1s;}
+.cs-bars i:nth-child(4){height:75%;transition-delay:0.15s;}
+.cs-bars i:nth-child(5){height:60%;transition-delay:0.2s;}
+.cs-bars i:nth-child(6){height:92%;transition-delay:0.25s;}
+/* mockup B — tuiles dashboard + sparkline */
+.cs-dash{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:34px 1fr;gap:7px;height:100%;}
+.cs-dash i{
+  background:rgba(200,96,42,0.1);border:1px solid rgba(200,96,42,0.2);
+  border-radius:6px;
+  transition:background 0.35s ease,border-color 0.35s ease,transform 0.35s ease;
+}
+.cs-card:hover .cs-dash i{background:rgba(200,96,42,0.22);border-color:rgba(200,96,42,0.45);}
+.cs-card:hover .cs-dash i:nth-child(1){transition-delay:0s;transform:translateY(-2px);}
+.cs-card:hover .cs-dash i:nth-child(2){transition-delay:0.06s;transform:translateY(-2px);}
+.cs-card:hover .cs-dash i:nth-child(3){transition-delay:0.12s;transform:translateY(-2px);}
+.cs-dash .cs-spark{
+  grid-column:1/-1;position:relative;overflow:hidden;
+  background:rgba(240,230,211,0.03);border-color:rgba(240,230,211,0.08);
+}
+.cs-spark svg{position:absolute;inset:0;width:100%;height:100%;}
+.cs-spark path{
+  fill:none;stroke:var(--copper);stroke-width:2;stroke-linecap:round;
+  stroke-dasharray:240;stroke-dashoffset:240;
+  transition:stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1);
+}
+.cs-card:hover .cs-spark path{stroke-dashoffset:0;}
+/* mockup C — cercles d'audience */
+.cs-aud{position:relative;height:100%;}
+.cs-aud i{
+  position:absolute;border-radius:50%;
+  border:1.5px solid rgba(200,96,42,0.5);
+  background:radial-gradient(circle,rgba(200,96,42,0.18) 0%,rgba(200,96,42,0.03) 70%);
+  transition:transform 0.55s cubic-bezier(0.34,1.4,0.64,1),border-color 0.4s ease;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:0.55rem;font-weight:700;
+  letter-spacing:0.1em;color:rgba(240,230,211,0.65);
+}
+.cs-aud i:nth-child(1){width:74px;height:74px;left:14%;top:12%;}
+.cs-aud i:nth-child(2){width:60px;height:60px;right:18%;bottom:8%;}
+.cs-aud i:nth-child(3){width:30px;height:30px;right:38%;top:8%;border-style:dashed;opacity:0.5;}
+.cs-card:hover .cs-aud i:nth-child(1){transform:scale(1.18);border-color:var(--copper);}
+.cs-card:hover .cs-aud i:nth-child(2){transform:scale(1.22);border-color:var(--copper);}
+.cs-card:hover .cs-aud i:nth-child(3){transform:scale(1.4) rotate(40deg);}
+/* card body */
+.cs-body{padding:1.2rem 1.4rem 1.35rem;display:flex;flex-direction:column;gap:0.4rem;flex:1;}
+.cs-cl{font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--copper);}
+.cs-tt{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--sand);line-height:1.3;}
+.cs-ds{font-size:0.8rem;color:rgba(240,230,211,0.48);line-height:1.6;}
+.cs-cta{
+  margin-top:auto;padding-top:0.9rem;
+  display:flex;align-items:center;gap:0.5rem;
+  font-family:'Syne',sans-serif;font-size:0.68rem;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--copper);
+}
+.cs-cta::after{content:'→';transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+.cs-card:hover .cs-cta::after{transform:translateX(5px);}
+
+/* ── MODAL deep-dive ── */
+#cs-modal{
+  position:fixed;inset:0;z-index:9100;display:none;
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#cs-modal.open{display:flex;}
+.cs-m-back{
+  position:absolute;inset:0;
+  background:rgba(8,8,18,0.78);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  opacity:0;transition:opacity 0.3s ease;
+}
+#cs-modal.vis .cs-m-back{opacity:1;}
+.cs-m-card{
+  position:relative;width:min(820px,100%);max-height:88vh;overflow-y:auto;
+  background:linear-gradient(165deg,#1E1E36 0%,#16162A 100%);
+  border:1px solid rgba(200,96,42,0.28);
+  border-radius:20px;
+  box-shadow:0 40px 120px rgba(0,0,0,0.6),0 0 0 1px rgba(240,230,211,0.04);
+  opacity:0;transform:translateY(22px) scale(0.97);
+  transition:opacity 0.35s cubic-bezier(0.16,1,0.3,1),transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  scrollbar-width:thin;scrollbar-color:rgba(200,96,42,0.4) transparent;
+}
+#cs-modal.vis .cs-m-card{opacity:1;transform:translateY(0) scale(1);}
+.cs-m-hero{
+  position:sticky;top:0;z-index:3;
+  padding:1.5rem 1.8rem 1.2rem;
+  background:linear-gradient(180deg,#1E1E36 78%,rgba(30,30,54,0));
+  display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
+}
+.cs-m-cl{font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--copper);margin-bottom:0.35rem;}
+.cs-m-tt{font-family:'Syne',sans-serif;font-size:clamp(1.15rem,2.6vw,1.55rem);font-weight:800;color:var(--sand);line-height:1.2;letter-spacing:-0.01em;}
+.cs-m-x{
+  flex-shrink:0;width:36px;height:36px;border-radius:50%;cursor:pointer;
+  background:rgba(240,230,211,0.06);border:1px solid rgba(240,230,211,0.14);
+  color:rgba(240,230,211,0.7);font-size:0.95rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.25s ease;
+}
+.cs-m-x:hover{background:var(--copper);border-color:var(--copper);color:#fff;transform:rotate(90deg);}
+.cs-m-body{padding:0.4rem 1.8rem 1.8rem;}
+.cs-m-kpis{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0.7rem;
+  margin:0.6rem 0 1.6rem;
+}
+@media(max-width:640px){.cs-m-kpis{grid-template-columns:repeat(2,1fr);}}
+.cs-m-kpi{
+  background:rgba(200,96,42,0.07);border:1px solid rgba(200,96,42,0.22);
+  border-radius:12px;padding:0.9rem 0.6rem;text-align:center;
+}
+.cs-m-kv{font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;color:var(--copper);display:block;line-height:1;margin-bottom:0.25rem;}
+.cs-m-kl{font-size:0.6rem;color:rgba(240,230,211,0.45);letter-spacing:0.1em;text-transform:uppercase;}
+.cs-m-sh{
+  font-family:'Syne',sans-serif;font-size:0.64rem;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--copper);
+  margin:1.5rem 0 0.6rem;display:flex;align-items:center;gap:0.7rem;
+}
+.cs-m-sh::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(200,96,42,0.3),transparent);}
+.cs-m-tx{font-size:0.86rem;color:rgba(240,230,211,0.68);line-height:1.7;}
+.cs-m-steps{list-style:none;counter-reset:step;display:flex;flex-direction:column;gap:0.55rem;margin-top:0.3rem;}
+.cs-m-steps li{
+  counter-increment:step;position:relative;
+  padding:0.7rem 0.9rem 0.7rem 2.9rem;
+  background:rgba(240,230,211,0.035);border:1px solid rgba(240,230,211,0.08);
+  border-radius:10px;font-size:0.83rem;color:rgba(240,230,211,0.65);line-height:1.55;
+  transition:border-color 0.25s ease,background 0.25s ease,transform 0.25s ease;
+}
+.cs-m-steps li:hover{border-color:rgba(200,96,42,0.35);background:rgba(200,96,42,0.06);transform:translateX(4px);}
+.cs-m-steps li::before{
+  content:counter(step,decimal-leading-zero);
+  position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);
+  font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;color:var(--copper);
+}
+.cs-m-stack{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.4rem;}
+.cs-m-tag{
+  font-size:0.66rem;font-weight:600;padding:0.22rem 0.65rem;border-radius:100px;
+  background:rgba(200,96,42,0.1);border:1px solid rgba(200,96,42,0.25);color:rgba(200,96,42,0.9);
+}
+body.cs-lock{overflow:hidden;}
+
+/* ══ HEATMAP OUTILS (dans #skills, fond night) ══ */
+.hm-wrap{margin-top:2.4rem;}
+.hm-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;}
+.hm-title{
+  font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,230,211,0.55);
+}
+.hm-legend{display:flex;align-items:center;gap:0.45rem;font-size:0.62rem;color:rgba(240,230,211,0.35);letter-spacing:0.06em;}
+.hm-legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
+.hm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:0.55rem;}
+.hm-cell{
+  position:relative;border-radius:10px;padding:0.7rem 0.8rem;
+  border:1px solid rgba(240,230,211,0.09);
+  font-size:0.74rem;font-weight:600;color:rgba(240,230,211,0.75);
+  opacity:0;transform:translateY(10px) scale(0.96);
+  transition:opacity 0.45s ease,transform 0.45s cubic-bezier(0.34,1.4,0.64,1),
+             border-color 0.25s ease,box-shadow 0.25s ease;
+  cursor:default;
+}
+.hm-grid.in .hm-cell{opacity:1;transform:translateY(0) scale(1);}
+.hm-cell:hover{border-color:rgba(200,96,42,0.55);box-shadow:0 6px 20px rgba(200,96,42,0.18);transform:translateY(-3px) scale(1.02)!important;}
+.hm-cell[data-lv="1"]{background:rgba(200,96,42,0.05);}
+.hm-cell[data-lv="2"]{background:rgba(200,96,42,0.12);}
+.hm-cell[data-lv="3"]{background:rgba(200,96,42,0.22);}
+.hm-cell[data-lv="4"]{background:rgba(200,96,42,0.38);color:#fff;}
+.hm-cell[data-lv="5"]{background:linear-gradient(135deg,rgba(200,96,42,0.62),rgba(200,96,42,0.42));color:#fff;border-color:rgba(200,96,42,0.5);}
+.hm-lv{
+  position:absolute;top:0.55rem;right:0.65rem;
+  font-family:'Syne',sans-serif;font-size:0.55rem;font-weight:800;
+  color:rgba(240,230,211,0.4);letter-spacing:0.05em;
+}
+.hm-cell[data-lv="4"] .hm-lv,.hm-cell[data-lv="5"] .hm-lv{color:rgba(255,255,255,0.6);}
+.hm-cell .hm-tip{
+  position:absolute;bottom:calc(100% + 7px);left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:var(--night);border:1px solid rgba(200,96,42,0.35);
+  color:rgba(240,230,211,0.85);font-size:0.64rem;font-weight:500;
+  padding:0.3rem 0.65rem;border-radius:7px;white-space:nowrap;
+  opacity:0;pointer-events:none;z-index:5;
+  transition:opacity 0.2s ease,transform 0.2s ease;
+}
+.hm-cell:hover .hm-tip{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ══ SECTEURS — donut portefeuille ══ */
+#sectors{background:var(--bg);}
+.sec-layout{display:grid;grid-template-columns:360px 1fr;gap:2.6rem;align-items:center;}
+@media(max-width:860px){.sec-layout{grid-template-columns:1fr;}}
+.sec-chart{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:16px;
+  padding:1rem 0.6rem;box-shadow:var(--sh);position:relative;
+}
+#apexDonut{min-height:300px;}
+.sec-rows{display:flex;flex-direction:column;gap:0.5rem;}
+.sec-row{
+  display:flex;align-items:center;gap:0.9rem;cursor:pointer;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:12px;padding:0.8rem 1.1rem;
+  transition:border-color 0.3s ease,transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s ease;
+}
+.sec-row:hover,.sec-row.active{border-color:var(--bh);transform:translateX(5px);box-shadow:0 8px 24px rgba(200,96,42,0.1);}
+.sec-row.active{border-color:var(--copper);}
+.sec-swatch{width:13px;height:13px;border-radius:4px;flex-shrink:0;}
+.sec-nm{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);}
+.sec-ct{
+  margin-left:auto;flex-shrink:0;
+  font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:800;color:var(--copper);
+}
+.sec-brands{
+  flex-basis:100%;font-size:0.74rem;color:var(--muted);line-height:1.5;
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1),opacity 0.3s ease,margin 0.3s ease;
+}
+.sec-row.active .sec-brands{max-height:60px;opacity:1;margin-top:0.2rem;}
+.sec-row{flex-wrap:wrap;}
+
+/* ══ TESTIMONIALS ══ */
+#testimonials{background:var(--bg);}
+.tst-stage{position:relative;min-height:215px;}
+.tst-card{
+  position:absolute;inset:0;
+  background:var(--bg-card);border:1px solid var(--border);border-radius:16px;
+  padding:1.8rem 2rem;box-shadow:var(--sh);
+  display:flex;flex-direction:column;gap:1rem;
+  opacity:0;transform:translateX(28px);pointer-events:none;
+  transition:opacity 0.5s cubic-bezier(0.16,1,0.3,1),transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.tst-card.on{opacity:1;transform:translateX(0);pointer-events:auto;}
+.tst-card.off-l{transform:translateX(-28px);}
+.tst-q{
+  font-family:Georgia,'Times New Roman',serif;font-style:italic;
+  font-size:1.02rem;color:var(--text2);line-height:1.75;
+}
+.tst-q::before{
+  content:'“';display:block;font-size:2.6rem;line-height:0.5;
+  color:var(--copper);margin-bottom:0.7rem;font-style:normal;
+}
+.tst-who{display:flex;align-items:center;gap:0.85rem;margin-top:auto;}
+.tst-av{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--copper),var(--copper-d));
+  color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.85rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.tst-nm{font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);}
+.tst-rl{font-size:0.72rem;color:var(--muted);}
+.tst-dots{display:flex;gap:0.45rem;justify-content:center;margin-top:1.4rem;}
+.tst-dot{
+  width:8px;height:8px;border-radius:100px;border:none;cursor:pointer;
+  background:var(--border);padding:0;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.tst-dot.on{width:24px;background:var(--copper);}
+
+/* ══ KBD HELP OVERLAY ══ */
+#kbd-help{
+  position:fixed;inset:0;z-index:9200;display:none;
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+#kbd-help.open{display:flex;}
+.kbd-back{position:absolute;inset:0;background:rgba(8,8,18,0.75);backdrop-filter:blur(8px);}
+.kbd-card{
+  position:relative;width:min(420px,100%);
+  background:linear-gradient(165deg,#1E1E36,#16162A);
+  border:1px solid rgba(200,96,42,0.3);border-radius:18px;
+  padding:1.6rem 1.7rem;box-shadow:0 30px 90px rgba(0,0,0,0.55);
+  animation:audit-in 0.3s cubic-bezier(0.34,1.2,0.64,1) both;
+}
+.kbd-tt{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--sand);margin-bottom:1.1rem;}
+.kbd-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.42rem 0;border-bottom:1px solid rgba(240,230,211,0.06);}
+.kbd-row:last-of-type{border-bottom:none;}
+.kbd-row span{font-size:0.8rem;color:rgba(240,230,211,0.6);}
+.kbd-key{
+  font-family:'DM Sans',monospace;font-size:0.72rem;font-weight:700;
+  background:rgba(240,230,211,0.07);border:1px solid rgba(240,230,211,0.18);
+  border-bottom-width:2px;border-radius:6px;padding:0.18rem 0.55rem;
+  color:var(--sand);min-width:26px;text-align:center;display:inline-block;
+}
+.kbd-hint{margin-top:1rem;font-size:0.66rem;color:rgba(240,230,211,0.25);letter-spacing:0.05em;text-align:center;}
+
+/* hint pill nav */
+.kbd-pill{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  margin-top:1.2rem;padding:0.3rem 0.85rem;border-radius:100px;
+  background:rgba(240,230,211,0.04);border:1px solid rgba(240,230,211,0.1);
+  font-size:0.66rem;color:rgba(240,230,211,0.3);letter-spacing:0.05em;
+  cursor:pointer;transition:border-color 0.25s ease,color 0.25s ease;
+}
+.kbd-pill:hover{border-color:rgba(200,96,42,0.4);color:rgba(240,230,211,0.6);}
+.kbd-pill .kbd-key{font-size:0.62rem;padding:0.1rem 0.4rem;}
+
+/* ══ REDUCED MOTION ══ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;}
+  .ticker{animation:none;}
+  html{scroll-behavior:auto;}
+}
 </style>
 </head>
 <body>
@@ -1197,6 +1651,7 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
   <ul class="nav-links">
     <li><a href="#experience"><span class="fr">Expériences</span><span class="en">Experience</span></a></li>
     <li><a href="#projects"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
+    <li><a href="#case-studies">Cases</a></li>
     <li><a href="#skills"><span class="fr">Compétences</span><span class="en">Skills</span></a></li>
     <li><a href="#side-projects"><span class="fr">Outils</span><span class="en">Tools</span></a></li>
     <li><a href="#education"><span class="fr">Formation</span><span class="en">Education</span></a></li>
@@ -1227,8 +1682,10 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
 <!-- ══ MOBILE MENU ══ -->
 <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <ul>
+    <li><a href="#trajectory" onclick="closeMobileMenu()"><span class="fr">Trajectoire</span><span class="en">Trajectory</span></a></li>
     <li><a href="#experience" onclick="closeMobileMenu()"><span class="fr">Expériences</span><span class="en">Experience</span></a></li>
     <li><a href="#projects" onclick="closeMobileMenu()"><span class="fr">Projets</span><span class="en">Projects</span></a></li>
+    <li><a href="#case-studies" onclick="closeMobileMenu()">Cases</a></li>
     <li><a href="#skills" onclick="closeMobileMenu()"><span class="fr">Compétences</span><span class="en">Skills</span></a></li>
     <li><a href="#side-projects" onclick="closeMobileMenu()"><span class="fr">Outils</span><span class="en">Tools</span></a></li>
     <li><a href="#education" onclick="closeMobileMenu()"><span class="fr">Formation</span><span class="en">Education</span></a></li>
@@ -1352,6 +1809,36 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
     </div>
   </div>
 </section>
+
+<!-- ══ TRAJECTOIRE — timeline interactive ══ -->
+<section id="trajectory">
+  <div class="container">
+    <p class="s-lbl"><span class="fr">Trajectoire</span><span class="en">Trajectory</span></p>
+    <h2 class="s-ttl"><span class="fr">10 ans en mouvement</span><span class="en">A decade in motion</span></h2>
+
+    <!-- pills mobile -->
+    <div class="traj-mob" id="trajMob" role="tablist" aria-label="Timeline"></div>
+
+    <div class="traj-wrap fade" id="trajWrap">
+      <div class="traj-track">
+        <div class="traj-line"></div>
+        <div class="traj-line-fill" id="trajFill"></div>
+      </div>
+      <div class="traj-nodes" id="trajNodes"></div>
+      <div class="traj-detail" id="trajDetail" aria-live="polite">
+        <div class="traj-d-ico traj-d-anim" id="trajIco">🚀</div>
+        <div class="traj-d-anim">
+          <div class="traj-d-co" id="trajCo"></div>
+          <div class="traj-d-ro" id="trajRo"></div>
+          <div class="traj-d-tx" id="trajTx"></div>
+        </div>
+        <div class="traj-d-yr traj-d-anim" id="trajYr"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- ══ EXPERIENCE ══ -->
 <section id="experience">
@@ -1569,6 +2056,79 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
 <div class="divider"></div>
 
 <!-- ══ PROJECTS ══ -->
+<!-- ══ CASE STUDIES — deep dives ══ -->
+<section id="case-studies">
+  <div class="container">
+    <p class="s-lbl"><span class="fr">Deep Dives</span><span class="en">Deep Dives</span></p>
+    <h2 class="s-ttl"><span class="fr">Case Studies</span><span class="en">Case Studies</span></h2>
+    <p class="cs-sub">
+      <span class="fr">Trois dossiers, trois façons de créer de la valeur : intelligence concurrentielle, outillage data et stratégie de lancement. Clique pour ouvrir le dossier complet.</span>
+      <span class="en">Three cases, three ways of creating value: competitive intelligence, data tooling and launch strategy. Click to open the full case.</span>
+    </p>
+    <div class="cs-grid">
+
+      <article class="cs-card fade" data-cs="vw" tabindex="0" role="button" aria-haspopup="dialog">
+        <div class="cs-shot">
+          <div class="cs-shot-bar"><i></i><i></i><i></i></div>
+          <div class="cs-shot-body"><div class="cs-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-cl">Volkswagen Group · Remind-PHD</div>
+          <h3 class="cs-tt"><span class="fr">Intelligence concurrentielle C-level</span><span class="en">C-level competitive intelligence</span></h3>
+          <p class="cs-ds">
+            <span class="fr">Transformer la donnée Kantar / Mxplorer en analyses stratégiques bilingues pour 5 marques du groupe.</span>
+            <span class="en">Turning Kantar / Mxplorer data into bilingual strategic analysis for 5 group brands.</span>
+          </p>
+          <div class="cs-cta"><span class="fr">Ouvrir le dossier</span><span class="en">Open case</span></div>
+        </div>
+      </article>
+
+      <article class="cs-card fade" data-cs="doctolib" tabindex="0" role="button" aria-haspopup="dialog">
+        <div class="cs-shot">
+          <div class="cs-shot-bar"><i></i><i></i><i></i></div>
+          <div class="cs-shot-body">
+            <div class="cs-dash">
+              <i></i><i></i><i></i>
+              <i class="cs-spark"><svg viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M4,48 C30,46 38,30 60,32 S95,44 115,30 S160,10 196,14"/></svg></i>
+            </div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-cl">Doctolib · Remind-PHD</div>
+          <h3 class="cs-tt"><span class="fr">Dashboard Brand Lift multi-vagues</span><span class="en">Multi-wave Brand Lift dashboard</span></h3>
+          <p class="cs-ds">
+            <span class="fr">Un outil de reporting sur mesure, multi-campagnes et multi-vagues, construit de zéro en HTML/JS.</span>
+            <span class="en">A custom multi-campaign, multi-wave reporting tool, built from scratch in HTML/JS.</span>
+          </p>
+          <div class="cs-cta"><span class="fr">Ouvrir le dossier</span><span class="en">Open case</span></div>
+        </div>
+      </article>
+
+      <article class="cs-card fade" data-cs="cupra" tabindex="0" role="button" aria-haspopup="dialog">
+        <div class="cs-shot">
+          <div class="cs-shot-bar"><i></i><i></i><i></i></div>
+          <div class="cs-shot-body">
+            <div class="cs-aud"><i>OGs</i><i>NEXT GEN</i><i></i></div>
+          </div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-cl">CUPRA Raval · Remind-PHD</div>
+          <h3 class="cs-tt"><span class="fr">Stratégie de lancement</span><span class="en">Launch strategy</span></h3>
+          <p class="cs-ds">
+            <span class="fr">Recommandation média complète pour le lancement du Raval : ciblage TGI, BVOD, social et digital.</span>
+            <span class="en">Full media recommendation for the Raval launch: TGI targeting, BVOD, social and digital.</span>
+          </p>
+          <div class="cs-cta"><span class="fr">Ouvrir le dossier</span><span class="en">Open case</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<div class="divider"></div>
+
 <section id="projects">
   <div class="container">
     <p class="s-lbl"><span class="fr">Réalisations</span><span class="en">Achievements</span></p>
@@ -1770,12 +2330,76 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
 
       </div><!-- /sk-tags-panel -->
     </div><!-- /skills-layout -->
+    <!-- ══ HEATMAP OUTILS ══ -->
+    <div class="hm-wrap fade">
+      <div class="hm-head">
+        <div class="hm-title"><span class="fr">Heatmap des outils — intensité = maîtrise</span><span class="en">Tools heatmap — intensity = mastery</span></div>
+        <div class="hm-legend">
+          <span class="fr">Découverte</span><span class="en">Learning</span>
+          <i style="background:rgba(200,96,42,0.08)"></i>
+          <i style="background:rgba(200,96,42,0.22)"></i>
+          <i style="background:rgba(200,96,42,0.38)"></i>
+          <i style="background:rgba(200,96,42,0.62)"></i>
+          <span class="fr">Expert</span><span class="en">Expert</span>
+        </div>
+      </div>
+      <div class="hm-grid" id="hmGrid">
+        <div class="hm-cell" data-lv="5">DV360<span class="hm-lv">●●●●●</span><span class="hm-tip"><span class="fr">Trafficking & activation quotidiens</span><span class="en">Daily trafficking & activation</span></span></div>
+        <div class="hm-cell" data-lv="5">DCM / CM360<span class="hm-lv">●●●●●</span><span class="hm-tip"><span class="fr">Certifié Google · usage quotidien</span><span class="en">Google certified · daily use</span></span></div>
+        <div class="hm-cell" data-lv="5">GA4<span class="hm-lv">●●●●●</span><span class="hm-tip"><span class="fr">Certifié Google · dashboards & analyses</span><span class="en">Google certified · dashboards & analysis</span></span></div>
+        <div class="hm-cell" data-lv="4">Sizmek<span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Trafficking multi-régies</span><span class="en">Multi-publisher trafficking</span></span></div>
+        <div class="hm-cell" data-lv="4">Adobe Analytics<span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Reporting client avancé</span><span class="en">Advanced client reporting</span></span></div>
+        <div class="hm-cell" data-lv="4">IAS<span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Brand safety & viewability</span><span class="en">Brand safety & viewability</span></span></div>
+        <div class="hm-cell" data-lv="4">Google Ads<span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Pilotage SEA multi-comptes</span><span class="en">Multi-account SEA management</span></span></div>
+        <div class="hm-cell" data-lv="3">Meta Ads<span class="hm-lv">●●●○○</span><span class="hm-tip"><span class="fr">Coordination campagnes social</span><span class="en">Social campaign coordination</span></span></div>
+        <div class="hm-cell" data-lv="4">Excel <span style="opacity:0.6">avancé</span><span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Modèles budgétaires & médiaplans</span><span class="en">Budget models & media plans</span></span></div>
+        <div class="hm-cell" data-lv="4">Chart.js / Apex<span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Dataviz des dashboards maison</span><span class="en">Dataviz for custom dashboards</span></span></div>
+        <div class="hm-cell" data-lv="4">HTML / CSS / JS<span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Outils internes single-file</span><span class="en">Single-file internal tools</span></span></div>
+        <div class="hm-cell" data-lv="4">SheetJS<span class="hm-lv">●●●●○</span><span class="hm-tip"><span class="fr">Import Excel automatisé</span><span class="en">Automated Excel import</span></span></div>
+        <div class="hm-cell" data-lv="3">PptxGenJS<span class="hm-lv">●●●○○</span><span class="hm-tip"><span class="fr">Génération de slides automatique</span><span class="en">Automated slide generation</span></span></div>
+        <div class="hm-cell" data-lv="3">Apps Script<span class="hm-lv">●●●○○</span><span class="hm-tip"><span class="fr">Automatisations Google Drive</span><span class="en">Google Drive automations</span></span></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 
 
 <div class="divider"></div>
+
+<!-- ══ SECTEURS — portefeuille clients ══ -->
+<section id="sectors">
+  <div class="container">
+    <p class="s-lbl"><span class="fr">Portefeuille</span><span class="en">Portfolio</span></p>
+    <h2 class="s-ttl"><span class="fr">20+ marques, 6 industries</span><span class="en">20+ brands, 6 industries</span></h2>
+    <div class="sec-layout">
+      <div class="sec-chart fade"><div id="apexDonut"></div></div>
+      <div class="sec-rows" id="secRows"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!--
+  ══ TESTIMONIALS ══
+  Section prête mais MASQUÉE (attribut hidden ci-dessous) tant que les vraies
+  recommandations ne sont pas intégrées. Pour l'activer :
+  1. Remplace les citations/noms placeholder dans TST_DATA (script v2 en bas de page)
+     par de vraies recommandations (LinkedIn, managers, clients).
+  2. Supprime l'attribut hidden de la balise <section> ci-dessous.
+  3. (Optionnel) Ajoute un lien nav vers #testimonials.
+-->
+<section id="testimonials" hidden>
+  <div class="container">
+    <p class="s-lbl"><span class="fr">Ils en parlent</span><span class="en">What they say</span></p>
+    <h2 class="s-ttl"><span class="fr">Recommandations</span><span class="en">Testimonials</span></h2>
+    <div class="tst-stage" id="tstStage"></div>
+    <div class="tst-dots" id="tstDots"></div>
+  </div>
+</section>
+
 
 <!-- ══ OUTILS & PROJETS PERSO ══ -->
 <section id="side-projects">
@@ -1963,8 +2587,8 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
   </div>
 </section>
 
-</div><!-- /padding-top wrapper -->
 </main>
+</div><!-- /padding-top wrapper -->
 
 <!-- ══ FOOTER ══ -->
 <footer id="contact">
@@ -1981,6 +2605,7 @@ body:has(a:hover,button:hover,[onclick]:hover) #cursor-dot{
         <a href="tel:+33665027756" class="fl" aria-label="Appeler">📞 +33 6 65 02 77 56</a>
         <a href="https://www.linkedin.com/in/pierre-arthur-cavelier/" target="_blank" rel="noopener noreferrer" class="fl" aria-label="Profil LinkedIn (nouvelle fenêtre)">in LinkedIn</a>
       </div>
+      <button class="kbd-pill" onclick="toggleKbdHelp(true)" aria-label="Raccourcis clavier"><span class="kbd-key">?</span><span class="fr">Raccourcis clavier</span><span class="en">Keyboard shortcuts</span></button>
       <p class="fcp">Pierre-Arthur Cavelier de Cuverville — CV Interactif 2026 · Paris, France</p>
     </div>
   </div>
@@ -2300,7 +2925,7 @@ document.getElementById('themeBtn').addEventListener('click',function(){
 
 // ─── NAV ACTIVE SECTION INDICATOR ────────────────────────────────
 (function(){
-  var sections=['top','experience','projects','skills','side-projects','education','contact'];
+  var sections=['top','trajectory','experience','case-studies','projects','skills','sectors','side-projects','education','contact'];
   var links={};
   document.querySelectorAll('.nav-links a').forEach(function(a){
     var href=a.getAttribute('href');
@@ -2764,6 +3389,479 @@ function printCV() {
   <span class="fr">Mode Focus — triple-clic pour quitter</span>
   <span class="en">Focus Mode — triple-click to exit</span>
 </div>
+
+<!-- ══ V2 — CASE STUDY MODAL ══ -->
+<div id="cs-modal" role="dialog" aria-modal="true" aria-labelledby="csmTt">
+  <div class="cs-m-back" onclick="closeCS()"></div>
+  <div class="cs-m-card">
+    <div class="cs-m-hero">
+      <div>
+        <div class="cs-m-cl" id="csmCl"></div>
+        <h3 class="cs-m-tt" id="csmTt"></h3>
+      </div>
+      <button class="cs-m-x" onclick="closeCS()" aria-label="Fermer">✕</button>
+    </div>
+    <div class="cs-m-body" id="csmBody"></div>
+  </div>
+</div>
+
+<!-- ══ V2 — AIDE RACCOURCIS CLAVIER ══ -->
+<div id="kbd-help" role="dialog" aria-modal="true">
+  <div class="kbd-back" onclick="toggleKbdHelp(false)"></div>
+  <div class="kbd-card">
+    <div class="kbd-tt"><span class="fr">⌨️ Raccourcis clavier</span><span class="en">⌨️ Keyboard shortcuts</span></div>
+    <div class="kbd-row"><span class="fr">Trajectoire</span><span class="en">Trajectory</span><span class="kbd-key">T</span></div>
+    <div class="kbd-row"><span class="fr">Expériences</span><span class="en">Experience</span><span class="kbd-key">E</span></div>
+    <div class="kbd-row"><span class="fr">Case Studies</span><span class="en">Case Studies</span><span class="kbd-key">C</span></div>
+    <div class="kbd-row"><span class="fr">Projets</span><span class="en">Projects</span><span class="kbd-key">P</span></div>
+    <div class="kbd-row"><span class="fr">Compétences</span><span class="en">Skills</span><span class="kbd-key">S</span></div>
+    <div class="kbd-row"><span class="fr">Outils & side projects</span><span class="en">Tools & side projects</span><span class="kbd-key">O</span></div>
+    <div class="kbd-row"><span class="fr">Basculer le thème</span><span class="en">Toggle theme</span><span class="kbd-key">D</span></div>
+    <div class="kbd-row"><span class="fr">Basculer la langue</span><span class="en">Toggle language</span><span class="kbd-key">L</span></div>
+    <div class="kbd-row"><span class="fr">Cette aide</span><span class="en">This help</span><span class="kbd-key">?</span></div>
+    <div class="kbd-hint"><span class="fr">Psst — il reste un Konami Code à trouver…</span><span class="en">Psst — there's still a Konami Code to find…</span></div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   V2 ENGINE — Trajectoire · Case Studies · Donut · Heatmap ·
+   Testimonials · Raccourcis clavier
+   ════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+/* ─── 1. TRAJECTOIRE ──────────────────────────────────────────── */
+var TRAJ=[
+  {yr:'2015',ico:'🚀',
+   fr:{lbl:'ISG',co:'ISG Junior Études',ro:'Co-fondateur & Trésorier',tx:'Co-fondation de la junior-entreprise de l\u2019ISG : structuration des process, trésorerie et développement commercial depuis zéro. Premier goût du pilotage.'},
+   en:{lbl:'ISG',co:'ISG Junior Études',ro:'Co-founder & Treasurer',tx:'Co-founded ISG\u2019s student consulting firm: processes, treasury and commercial growth built from scratch. A first taste of leadership.'}},
+  {yr:'2017',ico:'🌏',
+   fr:{lbl:'Sydney',co:'La Planchette Berbigier — Sydney',ro:'Vendeur & Manager',tx:'Vente et management en environnement multiculturel en Australie. L\u2019anglais opérationnel et le sens client se forgent sur le terrain.'},
+   en:{lbl:'Sydney',co:'La Planchette Berbigier — Sydney',ro:'Sales & Manager',tx:'Sales and team management in a multicultural environment in Australia. Operational English and client sense, forged on the ground.'}},
+  {yr:'2018',ico:'📊',
+   fr:{lbl:'Allianz',co:'Allianz Technology',ro:'Junior Analyst — Account Manager',tx:'Analyse financière, reporting et gestion de portefeuilles clients en environnement corporate international. La rigueur des chiffres.'},
+   en:{lbl:'Allianz',co:'Allianz Technology',ro:'Junior Analyst — Account Manager',tx:'Financial analysis, reporting and client portfolio management in an international corporate environment. The discipline of numbers.'}},
+  {yr:'2019',ico:'🤝',
+   fr:{lbl:'ITEM PRO',co:'ITEM PRO',ro:'Project Manager Junior',tx:'Coordination de projets pour un acteur premium des arts de la table — interface clients, fournisseurs et équipes internes.'},
+   en:{lbl:'ITEM PRO',co:'ITEM PRO',ro:'Junior Project Manager',tx:'Project coordination for a premium tableware brand — the interface between clients, suppliers and internal teams.'}},
+  {yr:'2021',ico:'📡',
+   fr:{lbl:'Omnicom',co:'Omnicom — Remind-PHD',ro:'Account Executive',tx:'20+ marques pilotées sur 6 industries : stratégie plurimédia, trafficking DV360/DCM, dashboards automatisés. Le cœur du réacteur.'},
+   en:{lbl:'Omnicom',co:'Omnicom — Remind-PHD',ro:'Account Executive',tx:'20+ brands managed across 6 industries: cross-media strategy, DV360/DCM trafficking, automated dashboards. The engine room.'}},
+  {yr:'2026',ico:'🎯',future:true,
+   fr:{lbl:'Cap',co:'Prochain chapitre',ro:'Directeur de Clientèle',tx:'La suite logique : porter la relation client au niveau stratégique, encadrer, et transformer la donnée en décisions business.'},
+   en:{lbl:'Next',co:'Next chapter',ro:'Client Director',tx:'The logical next step: owning the client relationship at a strategic level, leading teams, turning data into business decisions.'}}
+];
+var trajActive=4;
+
+function trajLang(){return document.documentElement.dataset.lang||'fr';}
+
+function buildTraj(){
+  var nodes=document.getElementById('trajNodes');
+  var mob=document.getElementById('trajMob');
+  if(!nodes) return;
+  nodes.innerHTML='';mob.innerHTML='';
+  TRAJ.forEach(function(m,i){
+    var b=document.createElement('button');
+    b.className='traj-node'+(i===trajActive?' active':'')+(m.future?' future':'');
+    b.style.transitionDelay=(0.08*i)+'s';
+    b.setAttribute('aria-label',m.yr+' — '+m[trajLang()].co);
+    b.innerHTML='<span class="traj-dot"></span><span class="traj-yr">'+m.yr+'</span><span class="traj-lbl">'+m[trajLang()].lbl+'</span>';
+    b.addEventListener('click',function(){setTraj(i);});
+    nodes.appendChild(b);
+    var p=document.createElement('button');
+    p.textContent=m.yr;
+    p.className=i===trajActive?'active':'';
+    p.addEventListener('click',function(){setTraj(i);});
+    mob.appendChild(p);
+  });
+  renderTrajDetail(false);
+}
+
+function setTraj(i){
+  trajActive=i;
+  document.querySelectorAll('#trajNodes .traj-node').forEach(function(n,j){n.classList.toggle('active',j===i);});
+  document.querySelectorAll('#trajMob button').forEach(function(n,j){n.classList.toggle('active',j===i);});
+  updateTrajFill();
+  renderTrajDetail(true);
+}
+
+function updateTrajFill(){
+  var fill=document.getElementById('trajFill');
+  if(fill) fill.style.width=(trajActive/(TRAJ.length-1)*100)+'%';
+}
+
+function renderTrajDetail(animate){
+  var d=document.getElementById('trajDetail');
+  var m=TRAJ[trajActive], l=trajLang();
+  function paint(){
+    document.getElementById('trajIco').textContent=m.ico;
+    document.getElementById('trajCo').textContent=m[l].co;
+    document.getElementById('trajRo').textContent=m[l].ro;
+    document.getElementById('trajTx').textContent=m[l].tx;
+    document.getElementById('trajYr').textContent=m.yr;
+  }
+  if(animate){
+    d.classList.add('sw');
+    setTimeout(function(){paint();d.classList.remove('sw');},260);
+  } else paint();
+}
+
+/* line draws when section enters viewport */
+var trajWrap=document.getElementById('trajWrap');
+if(trajWrap){
+  buildTraj();
+  new IntersectionObserver(function(e,obs){
+    if(e[0].isIntersecting){
+      trajWrap.classList.add('in');
+      setTimeout(updateTrajFill,250);
+      obs.disconnect();
+    }
+  },{threshold:0.25}).observe(trajWrap);
+}
+
+/* ─── 2. CASE STUDIES — modal ─────────────────────────────────── */
+var CS={
+  vw:{
+    cl:'Volkswagen Group · Remind-PHD',
+    tt:{fr:'Intelligence concurrentielle C-level',en:'C-level competitive intelligence'},
+    kpis:[
+      {v:5,sfx:'',fr:'Marques couvertes',en:'Brands covered'},
+      {v:61,sfx:'',fr:'Termes de glossaire',en:'Glossary terms'},
+      {v:2,sfx:'',fr:'Langues (FR/EN)',en:'Languages (FR/EN)'},
+      {v:34,sfx:'%',pfx:'+',fr:'ROI campagne (VW)',en:'Campaign ROI (VW)'}
+    ],
+    ctx:{fr:'Le groupe Volkswagen (VW, Audi, SEAT/CUPRA, Škoda, Porsche) avait besoin d\u2019une lecture claire et actionnable de la pression média concurrente sur le marché français — destinée directement aux directions.',
+         en:'The Volkswagen Group (VW, Audi, SEAT/CUPRA, Škoda, Porsche) needed a clear, actionable read of competitive media pressure on the French market — aimed directly at leadership.'},
+    role:{fr:'Pilotage de l\u2019analyse de bout en bout : extraction et fiabilisation des données Kantar / Mxplorer, construction des analyses, rédaction des scripts de présentation bilingues et création d\u2019un glossaire de 61 termes pour rendre la donnée lisible par des non-experts.',
+          en:'End-to-end ownership: extracting and validating Kantar / Mxplorer data, building the analysis, writing bilingual presentation scripts and creating a 61-term glossary to make the data readable for non-experts.'},
+    steps:{
+      fr:['Cadrage avec les équipes : quelles décisions la donnée doit-elle éclairer ?','Extraction et nettoyage des investissements bruts/nets Kantar & Mxplorer','Analyse par marque, par canal et par période — identification des signaux forts','Mise en récit bilingue : slides, scripts de présentation et glossaire','Restitution C-level et itérations avec les retours des directions'],
+      en:['Scoping with the teams: which decisions should the data inform?','Extracting and cleaning Kantar & Mxplorer gross/net investments','Analysis by brand, channel and period — surfacing the strong signals','Bilingual storytelling: slides, presentation scripts and glossary','C-level delivery and iterations based on leadership feedback']},
+    res:{fr:'Des comités de direction qui s\u2019appuient sur une vision concurrentielle partagée, en français comme en anglais — et un format d\u2019analyse réutilisé d\u2019un trimestre à l\u2019autre.',
+         en:'Leadership meetings now rely on a shared competitive view, in French and English — with an analysis format reused quarter after quarter.'},
+    stack:['Kantar','Mxplorer','Excel','PowerPoint','Storytelling FR/EN']
+  },
+  doctolib:{
+    cl:'Doctolib · Remind-PHD',
+    tt:{fr:'Dashboard Brand Lift multi-vagues',en:'Multi-wave Brand Lift dashboard'},
+    kpis:[
+      {v:1,sfx:'',fr:'Fichier autonome',en:'Self-contained file'},
+      {v:100,sfx:'%',fr:'Import automatisé',en:'Automated import'},
+      {v:2,sfx:'',fr:'Thèmes (dark/light)',en:'Themes (dark/light)'},
+      {v:0,sfx:'',fr:'Dépendance serveur',en:'Server dependency'}
+    ],
+    ctx:{fr:'Les résultats de Brand Lift Survey de Doctolib arrivaient en fichiers Excel multi-campagnes et multi-vagues, longs à consolider manuellement et difficiles à présenter de manière homogène.',
+         en:'Doctolib\u2019s Brand Lift Survey results came as multi-campaign, multi-wave Excel files — slow to consolidate manually and hard to present consistently.'},
+    role:{fr:'Conception et développement complet d\u2019un outil HTML/JS single-file : import Excel via SheetJS, parsing robuste multi-formats, visualisations Chart.js, comparaisons inter-vagues et design system dark/light aligné sur les standards 2026 (Bento grid, glassmorphism, micro-animations).',
+          en:'Full design and development of a single-file HTML/JS tool: Excel import via SheetJS, robust multi-format parsing, Chart.js visualisations, wave-over-wave comparisons and a 2026-grade dark/light design system (Bento grid, glassmorphism, micro-animations).'},
+    steps:{
+      fr:['Audit des fichiers sources : formats, pièges de parsing, cas limites','Architecture single-file : zéro install, ouverture directe dans le navigateur','Moteur d\u2019import SheetJS avec détection dynamique des colonnes','Dataviz Chart.js : KPIs, comparaisons de vagues, code couleur de performance','Redesign 2026 : dark mode obsidien, contrastes light mode validés sur captures'],
+      en:['Source file audit: formats, parsing pitfalls, edge cases','Single-file architecture: zero install, opens straight in the browser','SheetJS import engine with dynamic column detection','Chart.js dataviz: KPIs, wave comparisons, performance colour-coding','2026 redesign: obsidian dark mode, light-mode contrast validated on screenshots']},
+    res:{fr:'Le reporting Brand Lift est passé d\u2019une consolidation manuelle à un glisser-déposer : l\u2019équipe charge le fichier, l\u2019outil fait le reste. Un format devenu référence interne.',
+         en:'Brand Lift reporting went from manual consolidation to drag-and-drop: the team loads the file, the tool does the rest. Now an internal reference format.'},
+    stack:['HTML/CSS/JS','SheetJS','Chart.js','UX 2026','Dark/Light']
+  },
+  cupra:{
+    cl:'CUPRA Raval · Remind-PHD',
+    tt:{fr:'Stratégie de lancement Raval',en:'Raval launch strategy'},
+    kpis:[
+      {v:2,sfx:'',fr:'Segments cibles',en:'Target segments'},
+      {v:3,sfx:'',fr:'Canaux prioritaires',en:'Priority channels'},
+      {v:1,sfx:'',fr:'Lancement marché',en:'Market launch'},
+      {v:360,sfx:'°',fr:'Vision plurimédia',en:'Cross-media view'}
+    ],
+    ctx:{fr:'Lancement du CUPRA Raval sur le marché français : une marque jeune, un modèle urbain, et deux publics aux codes très différents à toucher sans diluer le positionnement.',
+         en:'Launching the CUPRA Raval on the French market: a young brand, an urban model, and two audiences with very different codes — without diluting the positioning.'},
+    role:{fr:'Construction de la recommandation média : analyse d\u2019audience TGI pour définir les segments « OGs » et « Next Gens », arbitrage des canaux (BVOD, social, digital), et production de la présentation finale, avec génération automatisée des slides.',
+          en:'Built the media recommendation: TGI audience analysis defining the \u201cOGs\u201d and \u201cNext Gens\u201d segments, channel arbitration (BVOD, social, digital), and production of the final deck with automated slide generation.'},
+    steps:{
+      fr:['Analyse TGI : comportements médias, affinités et points de contact des deux segments','Définition des territoires « OGs » vs « Next Gens » et de leurs parcours','Arbitrage des canaux : BVOD pour la considération, social pour la culture, digital pour la conversion','Construction du dispositif plurimédia et du phasage de lancement','Production de la recommandation finale — slides générées via pptxgenjs'],
+      en:['TGI analysis: media behaviours, affinities and touchpoints for both segments','Defining the \u201cOGs\u201d vs \u201cNext Gens\u201d territories and journeys','Channel arbitration: BVOD for consideration, social for culture, digital for conversion','Building the cross-media plan and launch phasing','Producing the final recommendation — slides generated via pptxgenjs']},
+    res:{fr:'Une recommandation claire qui parle aux deux générations sans se contredire : un dispositif validé, prêt à activer, et une méthodologie d\u2019audience réutilisable pour les prochains lancements.',
+         en:'A clear recommendation that speaks to both generations without contradiction: a validated, ready-to-activate plan and an audience methodology reusable for future launches.'},
+    stack:['TGI','BVOD','Social','Digital','pptxgenjs']
+  }
+};
+
+var csModal=document.getElementById('cs-modal');
+var lastFocus=null;
+
+function csLang(){return document.documentElement.dataset.lang||'fr';}
+
+function openCS(key){
+  var d=CS[key];if(!d||!csModal) return;
+  var l=csLang();
+  lastFocus=document.activeElement;
+  document.getElementById('csmCl').textContent=d.cl;
+  document.getElementById('csmTt').textContent=d.tt[l];
+  var b=document.getElementById('csmBody');
+  var kpiHtml=d.kpis.map(function(k){
+    return '<div class="cs-m-kpi"><span class="cs-m-kv" data-target="'+k.v+'" data-sfx="'+(k.sfx||'')+'" data-pfx="'+(k.pfx||'')+'">0</span><span class="cs-m-kl">'+k[l==='fr'?'fr':'en']+'</span></div>';
+  }).join('');
+  var stepsHtml=d.steps[l].map(function(s){return '<li>'+s+'</li>';}).join('');
+  var stackHtml=d.stack.map(function(s){return '<span class="cs-m-tag">'+s+'</span>';}).join('');
+  var T=l==='fr'
+    ?{ctx:'Contexte',role:'Mon rôle',proc:'Process',res:'Résultats',stack:'Stack & méthodes'}
+    :{ctx:'Context',role:'My role',proc:'Process',res:'Results',stack:'Stack & methods'};
+  b.innerHTML=
+    '<div class="cs-m-kpis">'+kpiHtml+'</div>'+
+    '<div class="cs-m-sh">'+T.ctx+'</div><p class="cs-m-tx">'+d.ctx[l]+'</p>'+
+    '<div class="cs-m-sh">'+T.role+'</div><p class="cs-m-tx">'+d.role[l]+'</p>'+
+    '<div class="cs-m-sh">'+T.proc+'</div><ol class="cs-m-steps">'+stepsHtml+'</ol>'+
+    '<div class="cs-m-sh">'+T.res+'</div><p class="cs-m-tx">'+d.res[l]+'</p>'+
+    '<div class="cs-m-sh">'+T.stack+'</div><div class="cs-m-stack">'+stackHtml+'</div>';
+  csModal.classList.add('open');
+  document.body.classList.add('cs-lock');
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    csModal.classList.add('vis');
+    b.querySelectorAll('.cs-m-kv').forEach(function(el,i){
+      setTimeout(function(){csCount(el);},150+i*90);
+    });
+  });});
+  var x=csModal.querySelector('.cs-m-x');if(x) x.focus();
+}
+
+function csCount(el){
+  var target=parseInt(el.dataset.target,10);
+  var sfx=el.dataset.sfx||'', pfx=el.dataset.pfx||'';
+  var dur=900, t0=performance.now();
+  function step(now){
+    var p=Math.min((now-t0)/dur,1);
+    var e=1-Math.pow(1-p,3);
+    el.textContent=pfx+Math.round(target*e)+sfx;
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function closeCS(){
+  if(!csModal) return;
+  csModal.classList.remove('vis');
+  document.body.classList.remove('cs-lock');
+  setTimeout(function(){csModal.classList.remove('open');},320);
+  if(lastFocus&&lastFocus.focus) lastFocus.focus();
+}
+window.closeCS=closeCS;
+
+document.querySelectorAll('.cs-card').forEach(function(c){
+  c.addEventListener('click',function(){openCS(c.dataset.cs);});
+  c.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();openCS(c.dataset.cs);}
+  });
+  /* tilt 3D subtil */
+  if(!window.matchMedia('(hover:none)').matches){
+    c.addEventListener('mousemove',function(e){
+      var r=c.getBoundingClientRect();
+      var nx=(e.clientX-r.left)/r.width-0.5;
+      var ny=(e.clientY-r.top)/r.height-0.5;
+      c.style.transform='perspective(900px) rotateY('+(nx*5)+'deg) rotateX('+(-ny*5)+'deg) translateY(-5px)';
+    });
+    c.addEventListener('mouseleave',function(){c.style.transform='';});
+  }
+});
+
+/* ─── 3. DONUT SECTEURS ───────────────────────────────────────── */
+var SECTORS=[
+  {fr:'Travel & Tourisme',en:'Travel & Tourism',n:6,brands:'Delta Air Lines · La Compagnie · Dreamjet · Pierre & Vacances · Center Parcs · Villages Nature',col:'#C8602A'},
+  {fr:'Automobile',en:'Automotive',n:4,brands:'Volkswagen · SEAT · CUPRA · MAN',col:'#E8A060'},
+  {fr:'Conso & Services',en:'Consumer & Services',n:4,brands:'Beko · Intersnack · Maison Briau · HSBC',col:'#A04E22'},
+  {fr:'Santé & Wellness',en:'Health & Wellness',n:3,brands:'Doctolib · Weight Watchers · Love & Green',col:'#D9784A'},
+  {fr:'Luxe & Spirits',en:'Luxury & Spirits',n:3,brands:'Moët Hennessy · Diageo · Aubade',col:'#7A5A48'},
+  {fr:'Médias & Édition',en:'Media & Publishing',n:3,brands:'Gaumont · DeAgostini · Planeta',col:'#4A4A6A'}
+];
+var donutInstance=null, donutBuilt=false;
+
+function buildSecRows(){
+  var wrap=document.getElementById('secRows');
+  if(!wrap) return;
+  var l=csLang();
+  wrap.innerHTML='';
+  SECTORS.forEach(function(s,i){
+    var r=document.createElement('div');
+    r.className='sec-row fade in';
+    r.setAttribute('role','button');r.tabIndex=0;
+    r.innerHTML='<span class="sec-swatch" style="background:'+s.col+'"></span>'+
+      '<span class="sec-nm">'+s[l]+'</span>'+
+      '<span class="sec-ct">'+s.n+' '+(l==='fr'?'marques':'brands')+'</span>'+
+      '<span class="sec-brands">'+s.brands+'</span>';
+    function tgl(){
+      var was=r.classList.contains('active');
+      wrap.querySelectorAll('.sec-row').forEach(function(x){x.classList.remove('active');});
+      if(!was) r.classList.add('active');
+      if(donutInstance) donutInstance.toggleDataPointSelection(i);
+    }
+    r.addEventListener('click',tgl);
+    r.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tgl();}});
+    wrap.appendChild(r);
+  });
+}
+
+function buildDonut(){
+  if(typeof ApexCharts==='undefined'){setTimeout(buildDonut,300);return;}
+  var el=document.getElementById('apexDonut');
+  if(!el) return;
+  var l=csLang();
+  var isDark=document.documentElement.dataset.theme==='dark';
+  var txt=isDark?'rgba(237,232,223,0.8)':'rgba(26,26,46,0.75)';
+  var opts={
+    series:SECTORS.map(function(s){return s.n;}),
+    labels:SECTORS.map(function(s){return s[l];}),
+    colors:SECTORS.map(function(s){return s.col;}),
+    chart:{type:'donut',height:310,background:'transparent',fontFamily:"'DM Sans',sans-serif",
+      animations:{enabled:true,easing:'easeout',speed:700,animateGradually:{enabled:true,delay:90}},
+      events:{dataPointSelection:function(e,ctx,cfg){
+        var sel=cfg.w.globals.selectedDataPoints[0]||[];
+        var rows=document.querySelectorAll('#secRows .sec-row');
+        rows.forEach(function(r,j){r.classList.toggle('active',sel.indexOf(j)>-1);});
+      }}},
+    stroke:{width:2,colors:[isDark?'#1E1E32':'#FFFFFF']},
+    dataLabels:{enabled:false},
+    legend:{show:false},
+    plotOptions:{pie:{donut:{size:'68%',labels:{
+      show:true,
+      name:{show:true,fontSize:'11px',fontFamily:"'Syne',sans-serif",color:txt,offsetY:18},
+      value:{show:true,fontSize:'26px',fontFamily:"'Syne',sans-serif",fontWeight:800,color:'#C8602A',offsetY:-18,
+        formatter:function(v){return v;}},
+      total:{show:true,showAlways:true,label:l==='fr'?'marques':'brands',fontSize:'11px',color:txt,
+        formatter:function(w){return w.globals.seriesTotals.reduce(function(a,b){return a+b;},0)+'+';}}
+    }}}},
+    tooltip:{theme:isDark?'dark':'light',y:{formatter:function(v){return v+(l==='fr'?' marques':' brands');}}}
+  };
+  if(donutInstance){donutInstance.destroy();}
+  donutInstance=new ApexCharts(el,opts);
+  donutInstance.render();
+  donutBuilt=true;
+}
+
+var secSection=document.getElementById('sectors');
+if(secSection){
+  buildSecRows();
+  new IntersectionObserver(function(e,obs){
+    if(e[0].isIntersecting){buildDonut();obs.disconnect();}
+  },{threshold:0.2}).observe(secSection);
+}
+
+/* rebuild donut + rows on theme / lang change */
+var themeBtnV2=document.getElementById('themeBtn');
+if(themeBtnV2) themeBtnV2.addEventListener('click',function(){
+  if(donutBuilt) setTimeout(buildDonut,80);
+});
+['btnFR','btnEN'].forEach(function(id){
+  var b=document.getElementById(id);
+  if(b) b.addEventListener('click',function(){
+    buildSecRows();
+    if(donutBuilt) setTimeout(buildDonut,60);
+    buildTraj();updateTrajFill();
+    buildTst();
+  });
+});
+
+/* ─── 4. HEATMAP — reveal en cascade ──────────────────────────── */
+var hmGrid=document.getElementById('hmGrid');
+if(hmGrid){
+  hmGrid.querySelectorAll('.hm-cell').forEach(function(c,i){
+    c.style.transitionDelay=(0.045*i)+'s, '+(0.045*i)+'s, 0s, 0s';
+  });
+  new IntersectionObserver(function(e,obs){
+    if(e[0].isIntersecting){
+      hmGrid.classList.add('in');obs.disconnect();
+      setTimeout(function(){
+        hmGrid.querySelectorAll('.hm-cell').forEach(function(c){c.style.transitionDelay='';});
+      },1400);
+    }
+  },{threshold:0.15}).observe(hmGrid);
+}
+
+/* ─── 5. TESTIMONIALS (placeholders — voir commentaire HTML) ──── */
+var TST_DATA=[
+  /* Remplace par de vraies recommandations puis retire `hidden`
+     de <section id="testimonials"> */
+  {ini:'XX',nm:'[Prénom Nom]',rl:{fr:'[Fonction] — Remind-PHD',en:'[Role] — Remind-PHD'},
+   q:{fr:'[Citation de recommandation à coller ici — LinkedIn, manager ou client.]',
+      en:'[Paste the testimonial quote here — LinkedIn, manager or client.]'}},
+  {ini:'XX',nm:'[Prénom Nom]',rl:{fr:'[Fonction] — Client',en:'[Role] — Client'},
+   q:{fr:'[Citation de recommandation à coller ici.]',en:'[Paste the testimonial quote here.]'}}
+];
+var tstIdx=0,tstTimer=null;
+
+function buildTst(){
+  var stage=document.getElementById('tstStage');
+  var dots=document.getElementById('tstDots');
+  if(!stage||!dots) return;
+  var l=csLang();
+  stage.innerHTML='';dots.innerHTML='';
+  TST_DATA.forEach(function(t,i){
+    var c=document.createElement('div');
+    c.className='tst-card'+(i===tstIdx?' on':'');
+    c.innerHTML='<p class="tst-q">'+t.q[l]+'</p>'+
+      '<div class="tst-who"><div class="tst-av">'+t.ini+'</div>'+
+      '<div><div class="tst-nm">'+t.nm+'</div><div class="tst-rl">'+t.rl[l]+'</div></div></div>';
+    stage.appendChild(c);
+    var d=document.createElement('button');
+    d.className='tst-dot'+(i===tstIdx?' on':'');
+    d.setAttribute('aria-label','Témoignage '+(i+1));
+    d.addEventListener('click',function(){setTst(i);startTstAuto();});
+    dots.appendChild(d);
+  });
+}
+function setTst(i){
+  var cards=document.querySelectorAll('#tstStage .tst-card');
+  var dots=document.querySelectorAll('#tstDots .tst-dot');
+  cards.forEach(function(c,j){
+    c.classList.remove('on','off-l');
+    if(j===i) c.classList.add('on');
+    else if(j<i) c.classList.add('off-l');
+  });
+  dots.forEach(function(d,j){d.classList.toggle('on',j===i);});
+  tstIdx=i;
+}
+function startTstAuto(){
+  clearInterval(tstTimer);
+  var sec=document.getElementById('testimonials');
+  if(!sec||sec.hidden) return;
+  tstTimer=setInterval(function(){setTst((tstIdx+1)%TST_DATA.length);},6000);
+}
+var tstSec=document.getElementById('testimonials');
+if(tstSec&&!tstSec.hidden){
+  buildTst();startTstAuto();
+  tstSec.addEventListener('mouseenter',function(){clearInterval(tstTimer);});
+  tstSec.addEventListener('mouseleave',startTstAuto);
+}
+
+/* ─── 6. RACCOURCIS CLAVIER ───────────────────────────────────── */
+function toggleKbdHelp(force){
+  var h=document.getElementById('kbd-help');
+  if(!h) return;
+  var open=force!==undefined?force:!h.classList.contains('open');
+  h.classList.toggle('open',open);
+}
+window.toggleKbdHelp=toggleKbdHelp;
+
+document.addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  var tag=(e.target.tagName||'').toLowerCase();
+  if(tag==='input'||tag==='textarea'||e.target.isContentEditable) return;
+  var k=e.key.toLowerCase();
+  if(e.key==='Escape'){closeCS();toggleKbdHelp(false);return;}
+  if(e.key==='?'){e.preventDefault();toggleKbdHelp();return;}
+  var map={t:'#trajectory',e:'#experience',c:'#case-studies',p:'#projects',s:'#skills',o:'#side-projects'};
+  if(map[k]){
+    var el=document.querySelector(map[k]);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  } else if(k==='d'){
+    var tb=document.getElementById('themeBtn');if(tb) tb.click();
+  } else if(k==='l'){
+    var cur=document.documentElement.dataset.lang||'fr';
+    var lb=document.getElementById(cur==='fr'?'btnEN':'btnFR');
+    if(lb) lb.click(); else setLang(cur==='fr'?'en':'fr');
+  }
+});
+
+console.log('%c⌨️  Appuie sur « ? » pour les raccourcis clavier.','color:#C8602A;font-family:monospace;font-size:10px;');
+
+})();
+</script>
 
 </body>
 
